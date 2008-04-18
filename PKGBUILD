@@ -1,4 +1,3 @@
-# $Id: PKGBUILD,v 1.8 2008/03/25 08:59:56 jeff Exp $
 # Maintainer: Jeff Mickey <jeff@archlinux.org>
 # Maintainer: Giovanni Scafora <linuxmania@gmail.com>
 # Contributor: David 'SleepyDog' <goodluv@gmail.com>
