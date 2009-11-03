@@ -5,7 +5,7 @@
 
 pkgname=mercurial
 pkgver=1.3.1
-pkgrel=2
+pkgrel=3
 pkgdesc="A scalable distributed SCM tool"
 url="http://www.selenic.com/mercurial"
 arch=('i686' 'x86_64')
@@ -27,6 +27,6 @@ build() {
     install -d $pkgdir/usr/share/emacs/site-lisp
     install -m644 contrib/{mq.el,mercurial.el} $pkgdir/usr/share/emacs/site-lisp || return 1
      
-    vimpath="$pkgdir/usr/share/vim"
+    vimpath="$pkgdir/usr/share/vim/vimfiles"
     install -m644 -D contrib/vim/HGAnnotate.vim $vimpath/syntax/HGAnnotate.vim || return 1
 }
