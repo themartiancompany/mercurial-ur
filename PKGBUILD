@@ -3,7 +3,7 @@
 
 pkgname=mercurial
 pkgver=1.6.4
-pkgrel=1
+pkgrel=2
 pkgdesc="A scalable distributed SCM tool"
 arch=('i686' 'x86_64')
 url="http://www.selenic.com/mercurial"
@@ -19,8 +19,8 @@ build() {
   cd "${srcdir}/${pkgname}-${pkgver}"
   python2 setup.py install --root="${pkgdir}/" --optimize=1 || return 1
 
-#  sed -i -e 's#env python#env python2#' \
-#    "${pkgdir}"/usr/lib/python2.7/site-packages/mercurial/{simplemerge,lsprof}.py
+  sed -i -e 's#env python#env python2#' \
+    "${pkgdir}"/usr/lib/python2.7/site-packages/mercurial/lsprof.py
 
   install -d ${pkgdir}/usr/share/man/{man1,man5}
   install -m644 doc/hg.1 "${pkgdir}/usr/share/man/man1" || return 1
