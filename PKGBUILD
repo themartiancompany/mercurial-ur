@@ -3,7 +3,7 @@
 
 pkgname=mercurial
 pkgver=2.9
-pkgrel=1
+pkgrel=2
 pkgdesc="A scalable distributed SCM tool"
 arch=('i686' 'x86_64')
 url="http://mercurial.selenic.com/"
@@ -43,4 +43,7 @@ package() {
   # install configuration file
   install -m755 -d ${pkgdir}/etc/mercurial
   install -m644 contrib/sample.hgrc "${pkgdir}/etc/mercurial/hgrc"
+  
+  # FS#38825 - Add certs config to package 
+  echo -e "\n[web]\ncacerts = /etc/ssl/certs/ca-certificates.crt" >> "${pkgdir}/etc/mercurial/hgrc"
 }
