@@ -4,7 +4,7 @@
 
 pkgname=mercurial
 pkgver=6.6.1
-pkgrel=2
+pkgrel=3
 pkgdesc='A scalable distributed SCM tool'
 arch=(x86_64)
 url="https://www.mercurial-scm.org/"
@@ -48,28 +48,28 @@ check() {
 package() {
   cd $pkgname-$pkgver
   python -m installer -d "$pkgdir" dist/*.whl
-  make DESTDIR="${pkgdir}" PREFIX=/usr install
 
-  install -m644 -D contrib/zsh_completion "$pkgdir/usr/share/zsh/site-functions/_hg"
-  install -m644 -D contrib/bash_completion "$pkgdir/usr/share/bash-completion/completions/hg"
+  # Do not invoke install target because it invokes a soon to be deprecated
+  # `setup.py install` and screws with shebang handling in PEP517 install above
+  make DESTDIR="$pkgdir" PREFIX=/usr install-doc
+
+  install -Dm644 contrib/zsh_completion "$pkgdir/usr/share/zsh/site-functions/_hg"
+  install -Dm644 contrib/bash_completion "$pkgdir/usr/share/bash-completion/completions/hg"
 
   make -C contrib/chg DESTDIR="$pkgdir" PREFIX=/usr install
-  install -m755 contrib/hg-ssh "$pkgdir/usr/bin"
-  install -m755 contrib/hgk "$pkgdir/usr/bin"
 
-  install -d "$pkgdir/usr/share/emacs/site-lisp"
-  install -m644 contrib/{mq.el,mercurial.el} "$pkgdir/usr/share/emacs/site-lisp"
+  install -Dm755 contrib/hg-ssh "$pkgdir/usr/bin"
+  install -Dm755 contrib/hgk "$pkgdir/usr/bin"
 
-  install -Dm644 contrib/vim/HGAnnotate.vim \
-    "$pkgdir/usr/share/vim/vimfiles/syntax/HGAnnotate.vim"
+  install -Dm644 -t "$pkgdir/usr/share/emacs/site-lisp/" contrib/{mq.el,mercurial.el}
+
+  install -Dm644 -t "$pkgdir/usr/share/vim/vimfiles/syntax/" contrib/vim/HGAnnotate.vim
 
   # set some variables
-  install -m755 -d "$pkgdir/etc/profile.d"
-  install -m644 "$srcdir/mercurial.profile" "$pkgdir/etc/profile.d/mercurial.sh"
+  install -Dm644 "$srcdir/mercurial.profile" "$pkgdir/etc/profile.d/mercurial.sh"
 
   # FS#38825 - Add certs config to package
-  install -m755 -d "$pkgdir/etc/mercurial"
-  cat <<-EOF > "$pkgdir/etc/mercurial/hgrc"
+  cat <<-EOF | install -Dm755 /dev/stdin "$pkgdir/etc/mercurial/hgrc"
 	[web]
 	cacerts = /etc/ssl/certs/ca-certificates.crt
 	EOF
