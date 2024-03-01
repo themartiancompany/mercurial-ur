@@ -1,0 +1,4 @@
+[mercurial]
+source = "regex"
+url = "https://www.mercurial-scm.org/release/latest-centos.dat"
+regex = 'Mercurial ([\d.]+) for'
