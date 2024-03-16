@@ -4,7 +4,7 @@
 # Contributor: Douglas Soares de Andrade <douglas@archlinux.org>
 
 pkgname=mercurial
-pkgver=6.6.3
+pkgver=6.7
 pkgrel=1
 pkgdesc='A scalable distributed SCM tool'
 arch=(x86_64)
@@ -30,7 +30,7 @@ validpgpkeys=(2BCCE14F5C6725AA2EA8AEB7B9C9DC824AA5BDD5
               1F66F8CDF654E905C11DA061A11E01CD0E05D956) # Raphaël Gomès <alphare@raphaelgomes.dev>
 source=(https://www.mercurial-scm.org/release/${pkgname}-${pkgver}.tar.gz{,.asc}
         mercurial.profile)
-sha512sums=('a7e0a466aa402659c1169a8c98c30be831b83cb7058416ed9cbe142977feda09008ff43f8c08c0dfdc217c449c6a1e8460cdcd62680e5dc1d0a632b52536486f'
+sha512sums=('c25fccb334702f2d3d228c16e1842cc6d0f258ca7f278f8e9cd270220073b3d851bb9c8eedfa837255d99f3159fd8b0f9f5373e20b779ee625ea946869c80165'
             'SKIP'
             '710dcddb24d928efc97370e869d9caa083107929ed9a1086dd2a3ae0caaf2c71e2f29060597e29315b6b15b1616251c42412e268ce737109c48ae4d7aa1b9555')
 
