@@ -1,3 +1,7 @@
+# SPDX-License-Identifier: AGPL-3.0
+#
+# Maintainer: Truocolo <truocolo@aol.com>
+# Maintainer: Pellegrino Prevete (tallero) <pellegrinoprevete@gmail.com>
 # Maintainer: Caleb Maclennan <caleb@alerque.com>
 # Contributor: Bartłomiej Piotrowski <bpiotrowski@archlinux.org>
 # Contributor: Giovanni Scafora <giovanni@archlinux.org>
@@ -7,14 +11,28 @@ pkgname=mercurial
 pkgver=6.8
 pkgrel=1
 pkgdesc='A scalable distributed SCM tool'
-arch=(x86_64)
+arch=(
+  x86_64
+  armv7l
+  aarch64
+  mips
+  i686
+  pentium4
+  powerpc
+)
 url="https://www.mercurial-scm.org/"
 license=(GPL)
-depends=(python)
-makedepends=(python-{build,installer,wheel}
-             python-setuptools
-             python-docutils)
-optdepends=('tk: for the hgk GUI')
+depends=(
+  python
+)
+makedepends=(
+  python-{build,installer,wheel}
+  python-setuptools
+  python-docutils
+)
+optdepends=(
+  'tk: for the hgk GUI'
+)
 #checkdepends=('breezy' 'cvs' 'git' 'git-lfs' 'python-docutils' 'subversion' 'unzip')
 
 # ToDo:
@@ -75,3 +93,4 @@ package() {
 	cacerts = /etc/ssl/certs/ca-certificates.crt
 	EOF
 }
+
