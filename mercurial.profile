@@ -1,1 +1,1 @@
-export HG=/usr/bin/hg
+export HG=%_usr%/bin/hg
