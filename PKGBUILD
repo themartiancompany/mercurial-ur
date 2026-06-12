@@ -99,7 +99,7 @@ pkgname=(
   "${_pkg}"
 )
 pkgver=6.8
-pkgrel=3
+pkgrel=4
 _pkgdesc=(
   'A scalable distributed SCM tool'
 )
