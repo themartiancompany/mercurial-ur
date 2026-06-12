@@ -89,7 +89,7 @@ pkgname=(
   "${_pkg}"
 )
 pkgver=6.8
-pkgrel=1
+pkgrel=2
 _pkgdesc=(
   'A scalable distributed SCM tool'
 )
@@ -163,15 +163,30 @@ _etc="$(
 backup=(
   "${_etc}/${_pkg}/${_pkg_alt}rc"
 )
-validpgpkeys=(
-  # Unknown?
-  "2BCCE14F5C6725AA2EA8AEB7B9C9DC824AA5BDD5"
-  "EB851395B4223EE2F7BA0B28DA54740BF08732BA"
-  # Pulkit Goyal <7895pulkit@gmail.com>
-  "818D87CD1AC180C394C86E633A33DE460D9EC39F"
-  # Raphaël Gomès <alphare@raphaelgomes.dev>
-  "1F66F8CDF654E905C11DA061A11E01CD0E05D956"
-)
+if [[ "${_evmfs}" == "false" ]]; then
+  validpgpkeys=(
+    # Unknown?
+    "2BCCE14F5C6725AA2EA8AEB7B9C9DC824AA5BDD5"
+    "EB851395B4223EE2F7BA0B28DA54740BF08732BA"
+    # Pulkit Goyal <7895pulkit@gmail.com>
+    "818D87CD1AC180C394C86E633A33DE460D9EC39F"
+    # Raphaël Gomès <alphare@raphaelgomes.dev>
+    "1F66F8CDF654E905C11DA061A11E01CD0E05D956"
+  )
+elif [[ "${_evmfs}" == "false" ]]; then
+  validpgpkeys=(
+    # Truocolo
+    #   <truocolo@aol.com>
+    '97E989E6CF1D2C7F7A41FF9F95684DBE23D6A3E9'
+    #   <truocolo@0x6E5163fC4BFc1511Dbe06bB605cc14a3e462332b>
+    'F690CBC17BD1F53557290AF51FC17D540D0ADEED'
+    # Pellegrino Prevete (dvorak)
+    #   <dvorak@0x87003Bd6C074C713783df04f36517451fF34CBEf>
+    '12D8E3D7888F741E89F86EE0FEC8567A644F1D16'
+  )
+fi
+source=()
+sha256sums=()
 _archive_format="tar.gz"
 _tarname="${_pkg}-${pkgver}"
 _tarfile="${_tarname}.${_archive_format}"
@@ -203,15 +218,19 @@ elif [[ "${_evmfs}" == "true" ]]; then
   if [[ "${_git}" == "false" ]]; then
     _src="${_evmfs_src}"
   fi
+  source+=(
+    "${_sig_src}"
+  )
+  sha256sums+=(
+    "${_sig_sum}"
+  )
 fi
-source=(
+source+=(
   "${_src}"
-  "${_sig_src}"
   "${_pkg}.profile"
 )
-sha256sums=(
+sha256sums+=(
   "${_sum}"
-  "${_sig_sum}"
   "${_profile_sum}"
 )
 sha512sums=(
