@@ -82,6 +82,16 @@ if [[ ! -v "_git_service" ]]; then
 fi
 
 _py="python"
+_pyver="$(
+  "${_py}" \
+    -V | \
+    awk \
+      '{print $2}' || \
+  true)"
+_pymajver="${_pyver%.*}"
+_pyminver="${_pymajver#*.}"
+_pynextver="${_pymajver%.*}.$((
+  "${_pyminver}" + 1))"
 _pkg=mercurial
 _pkg_alt=hg
 pkgbase="${_pkg}"
@@ -89,7 +99,7 @@ pkgname=(
   "${_pkg}"
 )
 pkgver=6.8
-pkgrel=2
+pkgrel=3
 _pkgdesc=(
   'A scalable distributed SCM tool'
 )
@@ -109,9 +119,16 @@ url="https://www.${_pkg}-scm.org"
 license=(
  "GPL"
 )
-depends=(
-  "${_py}"
-)
+if [[ "${_pyver}" != "" ]]; then
+  depends+=(
+    "${_py}>=${_pymajver}"
+    "${_py}<${_pynextver}"
+  )
+elif [[ "${_pyver}" == "" ]]; then
+  depends+=(
+    "${_py}"
+  )
+fi
 makedepends=(
   "${_py}-"{"build","installer","wheel"}
   "${_py}-setuptools"
@@ -119,9 +136,11 @@ makedepends=(
 )
 provides=(
   "${_pkg_alt}=${pkgver}"
+  "${_py}-${_pkg}=${pkgver}"
 )
 conflicts=(
   "${_pkg_alt}"
+  "${_py}-${_pkg}"
 )
 _tk_optdepends=(
   'tk:'
@@ -192,10 +211,10 @@ _tarname="${_pkg}-${pkgver}"
 _tarfile="${_tarname}.${_archive_format}"
 _sum="08e4d0e5da8af1132b51e6bc3350180ad57adcd935f097b6d0bc119a2c2c0a10"
 _sum_512="e0eab77c4599f24e33210404b16d591952fbcb7c5e3b64805abc18167c67eaad3d9baa2226e885add5e36569a5148d6a11c5690d68167690570e6e5b243e50f0"
-_profile_sum_512="710dcddb24d928efc97370e869d9caa083107929ed9a1086dd2a3ae0caaf2c71e2f29060597e29315b6b15b1616251c42412e268ce737109c48ae4d7aa1b9555"
 _sig_sum="df2fbd9b6415b44340a80ce1d29d888af1aad8fdfa71a0fd1ac2cc99d1f1777c"
 _hg_sig_sum="7cda2cb212a21ad66713ac7699442d542add753959059cd4acec33c761d10181"
-_profile_sum="87427151713e689cd87dc50d50c048e0e58285815e4eb61962b50583532cbde5"
+_profile_sum="30a14a57229a7d0f5e3de8db34ba094f4fe666e3e498cf06fd021a07cbd4601b"
+_profile_sum_512="688a4cb77d126d53f10a0b905279a77fae605efa4c784647528a484eaf0655944daa2f0ee69b2d9a0f7a3a913f1c15309214ebf65c0f201ce8b5063bc7a4f284"
 # Dvorak
 _evmfs_ns="0x87003Bd6C074C713783df04f36517451fF34CBEf"
 # Dogemaster
